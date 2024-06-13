@@ -8,6 +8,12 @@
 
 
     <Page id="page" title="{i18n>title}">
+		<footer>
+			<OverflowToolbar>
+							<ToolbarSpacer/>
+							<Button text="Carrello : ({cart>/cartCount})" icon="sap-icon://cart" press="onContinue" />
+			</OverflowToolbar>
+		</footer>
         <VBox>
          	<Table id="productsTable" items="{modProducts>/}">
              	<columns>
@@ -27,15 +33,8 @@
                      	<Text text="Shipping from" />
                   	</Column>
 
-                   	<Column>
-                    	<Text text="City" />
-                   	</Column>
-
                     <Column>
                     	<Text text="Add/Remove from cart" />
-                        <Button  type="Accept"  icon="sap-icon://cart-4" iconFirst="true" width="100%" enabled="true" visible="true" press=""/>
-                        <Button  type="Reject"  icon="sap-icon://cart-2" iconFirst="true" width="auto" enabled="false" visible="true" press=""/>
-
                    	</Column>
 
                		</columns>
@@ -43,12 +42,21 @@
                     		<ColumnListItem>
                       			<cells>
                            			<ObjectIdentifier title="{modProducts>ProductName}" />
-                                        <Button  type="Default"  icon="sap-icon://cart-4" iconFirst="true" width="auto" enabled="true" visible="true" press=""/>
-                                        <Button  type="Default"  icon="sap-icon://cart-2" iconFirst="true" width="auto" enabled="true" visible="true" press=""/>
-                            			<Text text="{modProducts>UnitPrice}" />
-                           				<Text text="{modProducts>UnitsInStock}" />
-                           				<StepInput id="stepInput" value="{modProducts>Quantity}" min="0" max="{modProduct>UnitsInStock}" change=".calculateTotalPrice" />
-                           				<Text text="{prezzoTotale}" />
+								</cells>
+								<cells>
+										<Text text="{modProducts>QuantityPerUnit}" />
+								</cells>
+								<cells>
+                            			<Text text="{path: 'modProducts>UnitPrice', formatter: '.formatPrice'}" />
+								</cells>
+								<cells>
+                           				<Text text="{modProducts>City}" />
+								</cells>
+								<cells>
+									<HBox>
+                                        <Button id="addButton"  type="Accept"  icon="sap-icon://cart-4" iconFirst="true" width="auto" enabled="{modProducts>AddEnabled}" visible="true" press="onAdd"/>
+                                        <Button id="removeButton" type="Reject"  icon="sap-icon://cart-2" iconFirst="true" width="auto" enabled="{modProducts>RemoveEnabled}" visible="true" press="onRemove"/>
+									</HBox>
                        			</cells>
                     		</ColumnListItem>
                 		</items>
